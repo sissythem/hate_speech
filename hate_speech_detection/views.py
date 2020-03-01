@@ -13,12 +13,11 @@ from hate_speech_detection.serializers import UserSerializer
 logger = logging.getLogger(__name__)
 
 
-class UserView(viewsets.ModelViewSet):
+class UserView(viewsets.GenericViewSet):
     permission_classes = (permissions.AllowAny,)
-    lookup_field = User.username
-    queryset = User.objects.all()
 
-    def create(self, request, *args, **kwargs):
+    @action(methods=["post"], detail=False, url_name="register", url_path="register")
+    def register(self, request, *args, **kwargs):
         try:
             username = request.data["username"]
             password = request.data["password"]

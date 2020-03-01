@@ -1,5 +1,6 @@
-from os.path import join, realpath, dirname, abspath
 from os import pardir
+from os.path import realpath, dirname, abspath
+
 from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -14,8 +15,9 @@ from hate_speech_detection.views import *
 schema_view = get_swagger_view(title='Hate-Speech-Detection')
 
 router = routers.DefaultRouter()
-router.register(r'semantic-augmentation', NlpSemanticAugmentationView, basename="semantic-augmentation")
+router.register(r'sem-augm', NlpSemanticAugmentationView, basename="sem-augm")
 router.register(r'users', UserView, basename="users")
+# router.register(r'hds_users', UserView, basename="hsd_users")
 # router.register(r'experiment-groups', ExperimentGroupView, basename="experiment-groups")
 # router.register(r'uploads,', UploadView, basename="uploads")
 
