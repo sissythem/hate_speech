@@ -14,8 +14,8 @@ from hate_speech_detection.views import *
 schema_view = get_swagger_view(title='Hate-Speech-Detection')
 
 router = routers.DefaultRouter()
-# router.register(r'runs', RunView, basename="runs")
-# router.register(r'experiments', ExperimentView, basename="experiments")
+router.register(r'semantic-augmentation', NlpSemanticAugmentationView, basename="semantic-augmentation")
+router.register(r'users', UserView, basename="users")
 # router.register(r'experiment-groups', ExperimentGroupView, basename="experiment-groups")
 # router.register(r'uploads,', UploadView, basename="uploads")
 

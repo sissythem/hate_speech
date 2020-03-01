@@ -9,4 +9,5 @@ resources/old_datasets/
 resources/embeddings/
 resources/features/
 backup/
+nlp-semantic-augmentation/
 logs/
