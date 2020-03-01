@@ -41,20 +41,7 @@ class BowFeature(AbstractFeature):
         for bow in bow_properties:
             self.hate_words_files[bow["language"]] = bow["file_name"]
 
-    def create_bow_features(self, Dataset, Tweet, Feature):
-        for language in self.hate_words_files.keys():
-            hate_words = self._load_hate_words(self.hate_words_files[language])
-            datasets = Dataset.objects.filter(language=language)
-            for dataset in datasets:
-                dataset_path = join(self.path_to_bow_folder, dataset.name)
-                if not exists(dataset_path):
-                    mkdir(dataset_path)
-                tweets = Tweet.objects.filter(dataset=dataset)
-                for tweet in tweets:
-                    self._create_feature_from_text(Feature=Feature, hate_words=hate_words, tweet=tweet,
-                                                   folder_path=dataset_path)
-
-    def _load_hate_words(self, filename):
+    def load_hate_words(self, filename):
         path_to_file = join(BASE_DIR, self.resources_folder, self.hsd_words_folder, filename)
         with open(path_to_file, "r") as f:
             lines = f.readlines()
@@ -63,20 +50,36 @@ class BowFeature(AbstractFeature):
                 final_lines.append(line.lower())
             return set(final_lines)
 
-    def _create_feature_from_text(self, Feature, hate_words, tweet, folder_path):
+    def create_bow_features(self, Dataset, Tweet, Feature):
+        for language in self.hate_words_files.keys():
+            hate_words = self.load_hate_words(self.hate_words_files[language])
+            datasets = Dataset.objects.filter(language=language)
+            for dataset in datasets:
+                dataset_path = join(self.path_to_bow_folder, dataset.name)
+                if not exists(dataset_path):
+                    mkdir(dataset_path)
+                tweets = Tweet.objects.filter(dataset=dataset)
+                bow_vectors = {}
+                for tweet in tweets:
+                    bow_vector = self.create_feature_from_text(hate_words=hate_words, tweet=tweet)
+                    bow_vectors[tweet.id] = bow_vector
+                feature = Feature()
+                feature.name = self.name
+                feature.dataset = dataset
+                feature.folder_path = dataset_path
+                feature.filename = "bow_{}".format(dataset.name)
+                feature.save()
+                path_to_file = join(dataset_path, feature.filename)
+                self.write_to_pickle(bow_vectors, path_to_file)
+
+    @staticmethod
+    def create_feature_from_text(hate_words, tweet):
         bow_vector = np.zeros(len(hate_words))
         list_hate_words = list(hate_words)
         for idx, word in enumerate(list_hate_words):
             if word in tweet.preprocessed_text:
                 bow_vector[idx] = 1
-        feature = Feature()
-        feature.name = self.name
-        feature.tweet = tweet
-        feature.folder_path = folder_path
-        feature.filename = "bow_{}".format(tweet.id)
-        feature.save()
-        path_to_file = join(folder_path, feature.filename)
-        self.write_to_pickle(bow_vector, path_to_file)
+        return bow_vector
 
 
 class WordEmbeddings(AbstractFeature):
@@ -98,6 +101,7 @@ class WordEmbeddings(AbstractFeature):
             for dataset in datasets:
                 dataset_path = join(self.path_to_embeddings, dataset)
                 tweets = Tweet.objects.filter(dataset=dataset)
+                all_vectors = {}
                 for tweet in tweets:
                     vectors = []
                     words = tweet.preprocessed_text.split(" ")
@@ -106,13 +110,14 @@ class WordEmbeddings(AbstractFeature):
                             vectors.append(word_embeddings[word])
                     vectors = np.asarray(vectors)
                     vectors = np.mean(vectors, axis=1)
-                    feature = Feature()
-                    feature.name = self.name
-                    feature.tweet = tweet
-                    feature.folder_path = dataset_path
-                    feature.filename = "embeddings_{}.pickle".format(tweet.id)
-                    feature.save()
-                    self.write_to_pickle(vectors, join(dataset_path, feature.filename))
+                    all_vectors[tweet.id] = vectors
+                feature = Feature()
+                feature.name = self.name
+                feature.dataset = dataset
+                feature.folder_path = dataset_path
+                feature.filename = "embeddings_{}.pickle".format(dataset.name)
+                feature.save()
+                self.write_to_pickle(all_vectors, join(dataset_path, feature.filename))
 
     def _load_vectors(self, language, filename):
         path_to_file = join(BASE_DIR, self.resources_folder, self.embeddings_folder, language, filename)
