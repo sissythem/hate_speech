@@ -1,0 +1,30 @@
+version: "2"
+
+services:
+  mysqldb:
+      image: mysql:8.0
+      container_name: hsd-db
+      environment:
+          - MYSQL_DATABASE=tweets
+          - MYSQL_USER=root
+          - MYSQL_ROOT_PASSWORD=root
+      ports:
+          - "3306:3306"
+      networks:
+      - hsdnet
+      logging:
+          driver: none
+
+  hsd:
+      image: registry.gitlab.com/sw-archive/di-msc/thesis/hate_speech:latest
+      container_name: hsd
+      ports:
+          - "8000:8000"
+      networks:
+      - hsdnet
+      depends_on:
+      - mysqldb
+
+networks:
+  hsdnet:
+      driver: bridge
