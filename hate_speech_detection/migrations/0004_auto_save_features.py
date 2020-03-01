@@ -23,7 +23,7 @@ class AbstractFeature:
     @staticmethod
     def write_to_pickle(vector, path):
         with open(path, "wb") as f:
-            pickle.dumps(vector, f)
+            pickle.dump(vector, f)
 
 
 class BowFeature(AbstractFeature):
