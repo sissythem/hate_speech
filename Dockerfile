@@ -5,6 +5,7 @@ ARG RELEASE=master
 RUN apk add --no-cache mariadb-client-libs mysql-client && \
     apk add --no-cache --virtual .build-deps build-base git mariadb-dev libffi-dev git && \
     git clone --branch $RELEASE --single-branch https://github.com/sissythem/hate_speech.git && \
+    pip install --upgrade pip && \
     pip install -r /hate_speech/requirements.txt && \
     pip install gunicorn && \
     rm -rf /hate_speech/.git && \

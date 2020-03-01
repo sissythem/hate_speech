@@ -2,6 +2,7 @@
 hate_speech/__pycache__/
 hate_speech/properties.json
 hate_speech_detection/__pycache__/
+hate_speech_detection/migrations/__pycache__/
 docs/build/
 resources/datasets/
 resources/old_datasets/
