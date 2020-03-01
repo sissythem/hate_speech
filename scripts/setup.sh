@@ -4,9 +4,9 @@ RESOURCES_FOLDER="resources"
 OLD_DATASETS_FOLDER="old_datasets"
 DATASETS_FOLDER="datasets"
 
-mkdir -p ${RESOURCES_FOLDER}
-mkdir ${RESOURCES_FOLDER}/${OLD_DATASETS_FOLDER}
-mkdir ${RESOURCES_FOLDER}/${DATASETS_FOLDER}
+mkdir -p "${RESOURCES_FOLDER}"
+mkdir -p "${RESOURCES_FOLDER}/${OLD_DATASETS_FOLDER}"
+mkdir -p "${RESOURCES_FOLDER}/${DATASETS_FOLDER}"
 PATH_TO_OLD_DATASETS="${RESOURCES_FOLDER}/${OLD_DATASETS_FOLDER}"
 
 # download german dataset
@@ -25,11 +25,11 @@ mv CONAN/CONAN.json ${PATH_TO_OLD_DATASETS}/
 rm -rf CONAN
 
 # download hate-speech-dataset
-mkdir - p ${PATH_TO_OLD_DATASETS}/"hate-speech-dataset"
+mkdir -p "${PATH_TO_OLD_DATASETS}/hate-speech-dataset"
 
 git clone https://github.com/aitor-garcia-p/hate-speech-dataset.git
 mv hate-speech-dataset/all_files/ ${PATH_TO_OLD_DATASETS}/hate-speech-dataset/
 mv hate-speech-dataset/annotations_metadata.csv ${PATH_TO_OLD_DATASETS}/hate-speech-dataset/
 rm -rf hate-speech-dataset
-rm -rf -
-rm -rf p
+
+python env_prep.py
