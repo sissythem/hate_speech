@@ -35,3 +35,11 @@ git clone https://github.com/aitor-garcia-p/hate-speech-dataset.git
 mv hate-speech-dataset/all_files/ ${PATH_TO_OLD_DATASETS}/hate-speech-dataset/
 mv hate-speech-dataset/annotations_metadata.csv ${PATH_TO_OLD_DATASETS}/hate-speech-dataset/
 rm -rf hate-speech-dataset
+
+# clone nlp-semantic-augmentation repo
+NLP_BRANCH=unsupervised_clustering
+git clone --branch $NLP_BRANCH --single-branch https://github.com/npit/nlp-semantic-augmentation.git &&
+  pip install -r ./nlp-semantic-augmentation/dependencies.txt &&
+  rm -rf ./nlp-semantic-augmentation/.git ./nlp-semantic-augmentation/docs/
+mkdir -p ./nlp-semantic-augmentation/raw_data/
+cp "${RESOURCES_FOLDER}/hsd_words/english.txt" ./nlp-semantic-augmentation/raw_data/

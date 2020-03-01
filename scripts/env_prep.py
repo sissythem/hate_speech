@@ -1,9 +1,10 @@
 import gzip
-import shutil
 import json
+import shutil
 import zipfile
 from os import getcwd, mkdir, remove
 from os.path import join, exists, splitext
+from shutil import copyfile
 
 import wget
 
@@ -58,12 +59,15 @@ def setup_embeddings_files(properties, path_to_embeddings_folder):
         if downloaded_file.endswith("zip"):
             with zipfile.ZipFile(path_to_downloaded_file, 'r') as zip_ref:
                 zip_ref.extractall(language_folder)
+            filename, ext = splitext(path_to_downloaded_file)
             remove(path_to_downloaded_file)
+            copyfile(filename, join(getcwd(), "nlp-semantic-augmentation", "raw_data"))
         elif downloaded_file.endswith("gz"):
             filename, ext = splitext(path_to_downloaded_file)
             with gzip.open(path_to_downloaded_file, 'r') as f_in, open(filename, 'wb') as f_out:
                 shutil.copyfileobj(f_in, f_out)
             remove(downloaded_file)
+            copyfile(filename, join(getcwd(), "nlp-semantic-augmentation", "raw_data"))
 
 
 if __name__ == '__main__':

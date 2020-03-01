@@ -11,7 +11,7 @@ RUN apk add --no-cache mariadb-client-libs mysql-client && \
     rm -rf /hate_speech/.git && \
     apk del .build-deps
 
-RUN apk add --no-cache bash vim
+RUN apk add --no-cache bash vim git
 
 ENV HOME=/hate_speech
 WORKDIR ${HOME}

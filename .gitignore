@@ -8,4 +8,5 @@ resources/datasets/
 resources/old_datasets/
 resources/embeddings/
 resources/features/
+backup/
 logs/
