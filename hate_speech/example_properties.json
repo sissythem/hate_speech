@@ -1,13 +1,28 @@
 {
-  "SECRET_KEY": "^7ql#lx3n&8=%u^139^fs*)=*x#ag)#9u+o(&v_&2*0--(zogg",
-  "DEBUG": true,
-  "ALLOWED_HOSTS": ["*"],
-  "DATABASES": {
+  "settings": {
+    "SECRET_KEY": "^7ql#lx3n&8=%u^139^fs*)=*x#ag)#9u+o(&v_&2*0--(zogg",
+    "DEBUG": true,
+    "ALLOWED_HOSTS": [
+      "*"
+    ],
+    "DATABASES": {
       "ENGINE": "django.db.backends.mysql",
-      "NAME": "tweets",
+      "NAME": "hate_speech",
       "USER": "root",
       "PASSWORD": "root",
       "HOST": "localhost",
       "PORT": "3306"
     }
+  },
+  "preprocessing": {
+    "remove_stopwords": true
+  },
+  "features": [
+    "bow",
+    "glove",
+    "bert",
+    "ngram-graphs"
+  ],
+  "models": {
+  }
 }

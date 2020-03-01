@@ -31,9 +31,12 @@ class Dataset(models.Model):
 
 
 class Tweet(models.Model):
+    class Meta:
+        db_table = "tweets"
+
     id = models.AutoField(primary_key=True, unique=True)
-    text = models.CharField(max_length=1000)
-    preprocessed_text = models.CharField(max_length=1000)
+    text = models.CharField(max_length=4000)
+    preprocessed_text = models.CharField(max_length=4000)
     label = models.CharField(max_length=255)
     dataset = models.ForeignKey(Dataset, related_name="tweets", on_delete=models.CASCADE)
 
