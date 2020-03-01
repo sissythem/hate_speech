@@ -6,7 +6,7 @@ from hate_speech_detection.models import Dataset, Tweet, Feature
 class FeatureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feature
-        fields = ["id", "name", "tweet"]
+        fields = ["id", "name", "tweet", "folder_path", "filename"]
 
 
 class TweetSerializer(serializers.ModelSerializer):

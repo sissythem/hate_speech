@@ -63,3 +63,5 @@ class Feature(models.Model):
     id = models.AutoField(primary_key=True, unique=True)
     name = models.CharField(max_length=255)
     tweet = models.ForeignKey(Tweet, related_name="features", on_delete=models.CASCADE)
+    folder_path = models.CharField(max_length=4000)
+    filename = models.CharField(max_length=1000)

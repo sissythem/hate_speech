@@ -27,6 +27,9 @@ echo "from django.contrib.auth.models import User; User.objects.create_superuser
 
 echo "Starting web server...."
 
+rm -rf $exec_path/resources/old_datasets/
+rm -rf $exec_path/resources/embeddings/
+
 # python $exec_path/manage.py runserver 0.0.0.0:$port
 exec gunicorn  -w 9 -b 0.0.0.0:$port hate_speech.wsgi \
 		--log-level debug \

@@ -18,8 +18,28 @@
     "remove_stopwords": true
   },
   "features": {
-    "bow": {
-    },
+    "bow": [
+      {
+        "language": "english",
+        "url": "",
+        "file_name": "english.txt"
+      },
+      {
+        "language": "french",
+        "url": "",
+        "file_name": "french.txt"
+      },
+      {
+        "language": "italian",
+        "url": "",
+        "file_name": "italian.txt"
+      },
+      {
+        "language": "german",
+        "url": "",
+        "file_name": "german.txt"
+      }
+    ],
     "embeddings": [
       {
         "language": "english",
