@@ -19,5 +19,5 @@ class DatasetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Dataset
-        fields = ["id", "num_labels", "language", "label1", "label2", "tweets"]
+        fields = ["id", "name", "num_labels", "language", "label1", "label2", "tweets"]
         depth = 1

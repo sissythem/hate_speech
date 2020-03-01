@@ -26,6 +26,7 @@ def save_tweets(apps, schema_editor):
             with open(file_path, "r") as f:
                 content = json.loads(f.read())
             dataset = Dataset()
+            dataset.name = file
             dataset.num_labels = content["num_labels"]
             dataset.language = content["language"]
             for i in range(dataset.num_labels):

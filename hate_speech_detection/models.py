@@ -11,6 +11,7 @@ class Dataset(models.Model):
         db_table = "datasets"
 
     id = models.AutoField(primary_key=True, unique=True)
+    name = models.CharField(max_length=255)
     num_labels = models.IntegerField()
     language = models.CharField(max_length=255)
     label1 = models.CharField(max_length=255)
