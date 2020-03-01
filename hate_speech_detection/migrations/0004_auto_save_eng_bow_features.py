@@ -52,6 +52,8 @@ class BowFeature(AbstractFeature):
 
     def create_bow_features(self, Dataset, Tweet, Feature):
         for language in self.hate_words_files.keys():
+            if language != "english":
+                continue
             hate_words = self.load_hate_words(self.hate_words_files[language])
             datasets = Dataset.objects.filter(language=language)
             for dataset in datasets:
@@ -82,63 +84,12 @@ class BowFeature(AbstractFeature):
         return bow_vector
 
 
-class WordEmbeddings(AbstractFeature):
-    embeddings_folder = "embeddings"
-
-    def __init__(self):
-        super().__init__()
-        self.name = "embeddings"
-        self.path_to_embeddings = join(BASE_DIR, self.resources_folder, self.features_folder, self.embeddings_folder)
-        embeddings_properties = all_properties["features"]["embeddings"]
-        self.embeddings = {}
-        for embedding in embeddings_properties:
-            self.embeddings[embedding["language"]] = embedding["file_name"]
-
-    def create_embedding_features(self, Dataset, Tweet, Feature):
-        for language, filename in self.embeddings.items():
-            word_embeddings = self._load_vectors(language=language, filename=filename)
-            datasets = Dataset.objects.filter(language=language)
-            for dataset in datasets:
-                dataset_path = join(self.path_to_embeddings, dataset)
-                tweets = Tweet.objects.filter(dataset=dataset)
-                all_vectors = {}
-                for tweet in tweets:
-                    vectors = []
-                    words = tweet.preprocessed_text.split(" ")
-                    for word in words:
-                        if word in word_embeddings.keys():
-                            vectors.append(word_embeddings[word])
-                    vectors = np.asarray(vectors)
-                    vectors = np.mean(vectors, axis=1)
-                    all_vectors[tweet.id] = vectors
-                feature = Feature()
-                feature.name = self.name
-                feature.dataset = dataset
-                feature.folder_path = dataset_path
-                feature.filename = "embeddings_{}.pickle".format(dataset.name)
-                feature.save()
-                self.write_to_pickle(all_vectors, join(dataset_path, feature.filename))
-
-    def _load_vectors(self, language, filename):
-        path_to_file = join(BASE_DIR, self.resources_folder, self.embeddings_folder, language, filename)
-        fin = io.open(path_to_file, 'r', encoding='utf-8', newline='\n', errors='ignore')
-        n, d = map(int, fin.readline().split())
-        print("Loaded dataset has {} words and vectors with dimension {}".format(n, d))
-        data = {}
-        for line in fin:
-            tokens = line.rstrip().split(' ')
-            data[tokens[0]] = map(float, tokens[1:])
-        return data
-
-
 def generate_features(apps, schema_editor):
     Dataset = apps.get_model("hate_speech_detection", "Dataset")
     Tweet = apps.get_model("hate_speech_detection", "Tweet")
     Feature = apps.get_model("hate_speech_detection", "Feature")
     bow_feature = BowFeature()
     bow_feature.create_bow_features(Dataset=Dataset, Tweet=Tweet, Feature=Feature)
-    embeddings_feature = WordEmbeddings()
-    embeddings_feature.create_embedding_features(Dataset=Dataset, Tweet=Tweet, Feature=Feature)
 
 
 class Migration(migrations.Migration):
