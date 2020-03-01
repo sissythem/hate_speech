@@ -11,10 +11,6 @@ class TweetSerializer(serializers.ModelSerializer):
 
 
 class DatasetSerializer(serializers.ModelSerializer):
-    """
-    Class used to serialize an ExperimentGroup object. All the declared fields in the models.py are included in this
-    serializer.
-    """
     tweets = TweetSerializer(source='get_tweets', many=True, read_only=True)
 
     class Meta:
