@@ -17,12 +17,36 @@
   "preprocessing": {
     "remove_stopwords": true
   },
-  "features": [
-    "bow",
-    "glove",
-    "bert",
-    "ngram-graphs"
-  ],
+  "features": {
+    "bow": {
+    },
+    "embeddings": [
+      {
+        "language": "english",
+        "url": "https://dl.fbaipublicfiles.com/fasttext/vectors-english/crawl-300d-2M.vec.zip",
+        "file_name": "crawl-300d-2M.vec"
+      },
+      {
+        "language": "french",
+        "url": "https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.fr.300.vec.gz",
+        "file_name": "cc.fr.300.vec"
+      },
+      {
+        "language": "italian",
+        "url": "https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.it.300.vec.gz",
+        "file_name": "cc.it.300.vec"
+      },
+      {
+        "language": "german",
+        "url": "https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.de.300.vec.gz",
+        "file_name": "cc.de.300.vec"
+      }
+    ],
+    "bert": {
+    },
+    "ngram-graphs": {
+    }
+  },
   "models": {
   }
 }

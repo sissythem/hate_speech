@@ -5,6 +5,8 @@
 3) CONAN.json --> https://github.com/marcoguerini/CONAN
 4) hate-speech-dataset/annotations_metadata.csv
    hate-speech-dataset/all_files/               ==>  https://github.com/aitor-garcia-p/hate-speech-dataset
+5) English word embeddings https://fasttext.cc/docs/en/english-vectors.html
+6) Other languages: https://fasttext.cc/docs/en/crawl-vectors.html
 
 ## Update db
 

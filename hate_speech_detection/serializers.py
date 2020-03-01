@@ -1,12 +1,20 @@
 from rest_framework import serializers
 
-from hate_speech_detection.models import Dataset, Tweet
+from hate_speech_detection.models import Dataset, Tweet, Feature
+
+
+class FeatureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Feature
+        fields = ["id", "name", "tweet"]
 
 
 class TweetSerializer(serializers.ModelSerializer):
+    features = FeatureSerializer(source="get_features", many=True, read_only=True)
+
     class Meta:
         model = Tweet
-        fields = ["id", "text", "preprocessed_text", "label", "dataset"]
+        fields = ["id", "text", "preprocessed_text", "label", "dataset", "features"]
         depth = 1
 
 

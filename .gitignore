@@ -6,4 +6,5 @@ hate_speech_detection/migrations/__pycache__/
 docs/build/
 resources/datasets/
 resources/old_datasets/
+resources/embeddings/
 logs/

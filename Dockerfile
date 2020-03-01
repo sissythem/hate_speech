@@ -23,5 +23,5 @@ COPY scripts/data_import.py ${HOME}
 
 RUN rm -rf scripts/ docs/
 
-CMD bash setup.sh && sleep(1) && bash entrypoint.sh
+CMD bash setup.sh && sleep(1) && python env_prep.py && sleep(1) && bash entrypoint.sh
 # CMD tail -f /dev/null

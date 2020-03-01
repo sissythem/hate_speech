@@ -1,12 +1,16 @@
 #!/bin/bash
 
+cp ./hate_speech/example_properties.json ./hate_speech/properties.json
+
 RESOURCES_FOLDER="resources"
 OLD_DATASETS_FOLDER="old_datasets"
 DATASETS_FOLDER="datasets"
+EMBEDDINGS_FOLDER="embeddings"
 
 mkdir -p "${RESOURCES_FOLDER}"
 mkdir -p "${RESOURCES_FOLDER}/${OLD_DATASETS_FOLDER}"
 mkdir -p "${RESOURCES_FOLDER}/${DATASETS_FOLDER}"
+mkdir -p "${RESOURCES_FOLDER}/${EMBEDDINGS_FOLDER}"
 PATH_TO_OLD_DATASETS="${RESOURCES_FOLDER}/${OLD_DATASETS_FOLDER}"
 
 # download german dataset
@@ -31,5 +35,3 @@ git clone https://github.com/aitor-garcia-p/hate-speech-dataset.git
 mv hate-speech-dataset/all_files/ ${PATH_TO_OLD_DATASETS}/hate-speech-dataset/
 mv hate-speech-dataset/annotations_metadata.csv ${PATH_TO_OLD_DATASETS}/hate-speech-dataset/
 rm -rf hate-speech-dataset
-
-python env_prep.py
