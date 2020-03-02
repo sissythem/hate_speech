@@ -11,11 +11,11 @@ test1:
 
   stage: build
   script:
-    - docker build --pull -t $RELEASE_IMAGE .
-    - docker push $RELEASE_IMAGE
+  - docker build --pull -t $RELEASE_IMAGE .
+  - docker push $RELEASE_IMAGE
 
-    only:
-      - master
+  only:
+    - master
 
 test:
   image: python:3.7
