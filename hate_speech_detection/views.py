@@ -13,6 +13,7 @@ from hate_speech_detection.serializers import UserSerializer
 logger = logging.getLogger(__name__)
 
 
+# Create your views here.
 class UserView(viewsets.GenericViewSet):
     permission_classes = (permissions.AllowAny,)
 
@@ -47,7 +48,6 @@ class UserView(viewsets.GenericViewSet):
             return Response("Error while trying to login! {}".format(e), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-# Create your views here.
 class NlpSemanticAugmentationView(viewsets.GenericViewSet):
     permission_classes = (permissions.AllowAny,)
 

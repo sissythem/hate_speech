@@ -10,4 +10,5 @@ resources/embeddings/
 resources/features/
 backup/
 nlp-semantic-augmentation/
+client/credentials.yaml
 logs/
