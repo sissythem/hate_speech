@@ -10,7 +10,7 @@
       "NAME": "hate_speech",
       "USER": "root",
       "PASSWORD": "root",
-      "HOST": "localhost",
+      "HOST": "hsd-db",
       "PORT": "3306"
     }
   },
